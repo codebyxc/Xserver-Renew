@@ -13,7 +13,7 @@ const ACCOUNTS = process.env.ACCOUNTS || `
     }
 ]`; // 双引号内填写你的邮箱和密码 
 
-
+const PROXY_SERVER = process.env.PROXY_SERVER || '';
 async function sendTelegramNotification(message, imagePath = null) {
     if (!TG_BOT_TOKEN || !TG_CHAT_ID) {
         console.log('未设置 Telegram Bot Token 或 Chat ID，跳过通知。');
@@ -88,7 +88,12 @@ async function sendTelegramNotification(message, imagePath = null) {
         console.log(`正在处理用户: ${user.username}`);
         const context = await browser.newContext();
         const page = await context.newPage();
-
+        const contextOptions = {};
+        if (PROXY_SERVER) {
+            contextOptions.proxy = { server: PROXY_SERVER };
+            console.log(`使用代理: ${PROXY_SERVER}`);
+}
+        const context = await browser.newContext(contextOptions);
         try {
             // 1. 导航到登录页面
             await page.goto('https://secure.xserver.ne.jp/xapanel/login/xmgame');
