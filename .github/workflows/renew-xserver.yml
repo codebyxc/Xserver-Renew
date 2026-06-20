@@ -27,6 +27,7 @@ jobs:
     - name: Run Extension Script
       env:
         ACCOUNTS: ${{ secrets.ACCOUNTS }}
+        PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
         TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
       run: npm start || true
